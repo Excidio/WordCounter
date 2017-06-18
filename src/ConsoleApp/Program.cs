@@ -10,6 +10,7 @@ namespace WordCounter.ConsoleApp
     public class Program
     {
         private static readonly FrequencyDictionary<string> Dictionary = new FrequencyDictionary<string>();
+        private static readonly LineParser LineParser = new LineParser();
 
         public static void Main(string[] args)
         {
@@ -17,7 +18,7 @@ namespace WordCounter.ConsoleApp
 
             foreach (var line in File.ReadLines(@"D:\Test\1.txt"))
             {
-                taskList.AddLast(Task.Factory.StartNew(() => Process(line)));
+                taskList.AddLast(Task.Factory.StartNew(() => ProcessLine(line)));
             }
 
             Task.WaitAll(taskList.ToArray());
@@ -25,15 +26,9 @@ namespace WordCounter.ConsoleApp
             File.WriteAllLines(@"D:\Test\res.txt", Dictionary.OrderByDescending(p => p.Value).Select(p => $"{p.Key},{p.Value}\n"));
         }
 
-        private static void Process(string value)
+        private static void ProcessLine(string value)
         {
-            var values = Regex
-                .Matches(value, "\\w+")
-                .Cast<Match>()
-                .Select(m => m.Value)
-                .ToArray();
-
-            foreach (var val in values)
+            foreach (var val in LineParser.Parse(value))
             {
                 Dictionary.Add(val.ToLower());
             }
