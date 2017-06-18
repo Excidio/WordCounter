@@ -2,18 +2,16 @@
 
 namespace WordCounter.BusinessLayer
 {
-    public class FrequencyDictionary<T>
+    public class FrequencyDictionary<T> : ConcurrentDictionary<T, int>
     {
-        private readonly ConcurrentDictionary<T, int> _dictionary = new ConcurrentDictionary<T, int>();
-
         public void Add(T key)
         {
-            _dictionary.AddOrUpdate(key, 1, (v, i) => ++i);
+            AddOrUpdate(key, 1, (v, i) => ++i);
         }
 
         public int GetValue(T key)
         {
-            _dictionary.TryGetValue(key, out int result);
+            TryGetValue(key, out int result);
 
             return result;
         }

@@ -13,14 +13,16 @@ namespace WordCounter.ConsoleApp
 
         public static void Main(string[] args)
         {
-            var taskList = new List<Task>();
+            var taskList = new LinkedList<Task>();
 
             foreach (var line in File.ReadLines(@"D:\Test\1.txt"))
             {
-                taskList.Add(Task.Factory.StartNew(() => Process(line)));
+                taskList.AddLast(Task.Factory.StartNew(() => Process(line)));
             }
 
             Task.WaitAll(taskList.ToArray());
+
+            File.WriteAllLines(@"D:\Test\res.txt", Dictionary.OrderByDescending(p => p.Value).Select(p => $"{p.Key},{p.Value}\n"));
         }
 
         private static void Process(string value)
