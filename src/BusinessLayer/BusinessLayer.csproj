@@ -42,6 +42,7 @@
     <Compile Include="FrequencyDictionary.cs" />
     <Compile Include="LineParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordCounter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
