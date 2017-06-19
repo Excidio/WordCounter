@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using CommandLine;
 
 namespace WordCounter.ConsoleApp
 {
@@ -9,9 +11,25 @@ namespace WordCounter.ConsoleApp
 
         public static void Main(string[] args)
         {
-            var result = WordCounter.Calculate(@"D:\Test\1.txt");
+            var options = new CommandLineOptions();
+            var parser = new Parser(s =>
+            {
+                s.CaseSensitive = false;
+                s.IgnoreUnknownArguments = false;
+                s.MutuallyExclusive = true;
+            });
 
-            File.WriteAllLines(@"D:\Test\res.txt", result.OrderByDescending(p => p.Value).Select(p => $"{p.Key},{p.Value}\n"));
+            if (parser.ParseArguments(args, options))
+            {
+                var result = WordCounter.Calculate(options.SourceFileName);
+
+                File.WriteAllLines(options.ResultFileName, result.OrderByDescending(p => p.Value).Select(p => $"{p.Key},{p.Value}\n"));
+            }
+            else
+            {
+                Console.WriteLine(options.GetUsage());
+                Console.ReadKey();
+            }
         }
     }
 }
