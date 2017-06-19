@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace WordCounter.BusinessLayer
+namespace WordCounter.BusinessLayer.LineParsers
 {
-    public class LineParser
+    public class RegexLineParser : ILineParser
     {
         /// <summary>
         /// Get words from the line.

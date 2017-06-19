@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
+using WordCounter.BusinessLayer.LineParsers;
 
 namespace WordCounter.BusinessLayer.Tests
 {
-    public class LineParserTests
+    public class RegexLineParserTests
     {
         [TestCase("")]
         [TestCase("hello", "hello")]
@@ -10,7 +11,7 @@ namespace WordCounter.BusinessLayer.Tests
         [TestCase("HELLO WORLD!", "HELLO", "WORLD")]
         public void ParseTest(string line, params string[] expectedResult)
         {
-            var parser = new LineParser();
+            var parser = new RegexLineParser();
 
             var actualResult = parser.Parse(line);
 

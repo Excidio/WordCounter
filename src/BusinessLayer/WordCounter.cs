@@ -2,12 +2,13 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using WordCounter.BusinessLayer.LineParsers;
 
 namespace WordCounter.BusinessLayer
 {
     public class WordCounter
     {
-        private static readonly LineParser LineParser = new LineParser();
+        private static readonly ILineParser LineParser = new RegexLineParser();
         
         public IDictionary<string, int> Calculate(string fileName)
         {

@@ -40,7 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrequencyDictionary.cs" />
-    <Compile Include="LineParser.cs" />
+    <Compile Include="LineParsers\ILineParser.cs" />
+    <Compile Include="LineParsers\RegexLineParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordCounter.cs" />
   </ItemGroup>
