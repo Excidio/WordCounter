@@ -21,9 +21,21 @@ namespace WordCounter.ConsoleApp
 
             if (parser.ParseArguments(args, options))
             {
-                var result = WordCounter.Calculate(options.SourceFileName);
+                try
+                {
+                    var result = WordCounter.Calculate(options.SourceFileName);
 
-                File.WriteAllLines(options.ResultFileName, result.OrderByDescending(p => p.Value).Select(p => $"{p.Key},{p.Value}\n"));
+                    File.WriteAllLines(options.ResultFileName,
+                        result.OrderByDescending(p => p.Value).Select(p => $"{p.Key},{p.Value}\n"));
+                }
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("File not found!");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Unexpected error: {e}");
+                }
             }
             else
             {
